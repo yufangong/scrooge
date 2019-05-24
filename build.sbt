@@ -52,8 +52,8 @@ val sharedSettingsWithoutScalaVersion = Seq(
   ),
 
   libraryDependencies ++= Seq(
-    "org.scalatest" %% "scalatest" % "3.0.0" % "test",
-    "org.scalacheck" %% "scalacheck" % "1.13.4" % "test",
+    "org.scalatest" %% "scalatest" % "3.0.8-RC2" % "test",
+    "org.scalacheck" %% "scalacheck" % "1.14.0" % "test",
     "junit" % "junit" % "4.12" % "test"
   ),
 
@@ -109,16 +109,14 @@ val sharedSettingsWithoutScalaVersion = Seq(
 val sharedSettings =
   sharedSettingsWithoutScalaVersion ++
   Seq(
-    scalaVersion := "2.12.8",
-    crossScalaVersions := Seq("2.11.12", "2.12.8"),
+    scalaVersion := "2.13.0-RC1",
     scalacOptions := Seq(
       "-deprecation",
       "-unchecked",
       "-feature", "-Xlint",
       "-encoding", "utf8",
       "-target:jvm-1.8",
-      "-Ypatmat-exhaust-depth", "40",
-      "-Yno-adapted-args"),
+      "-Ypatmat-exhaust-depth", "40"),
     javacOptions ++= Seq("-source", "1.8", "-target", "1.8", "-Xlint:unchecked"),
     javacOptions in doc := Seq("-source", "1.8")
   )
@@ -146,9 +144,8 @@ val settingsWithTwoTen =
 val settingsCrossCompiledWithTwoTen =
   sharedSettingsWithoutScalaVersion ++
   Seq(
-    crossScalaVersions := Seq("2.10.6", "2.11.12", "2.12.8"),
-    scalaVersion := "2.12.8",
-    scalacOptions := scalacTwoTenOptions,
+    scalaVersion := "2.13.0-RC1",
+    //scalacOptions := scalacTwoTenOptions,
     javacOptions ++= Seq("-source", "1.7", "-target", "1.7", "-Xlint:unchecked"),
     javacOptions in doc := Seq("-source", "1.7")
   )
@@ -207,14 +204,14 @@ lazy val scroogeGenerator = Project(
   name := "scrooge-generator",
   libraryDependencies ++= Seq(
     "org.apache.thrift" % "libthrift" % versions.libthrift,
-    "com.github.scopt" %% "scopt" % "3.5.0",
+    "com.github.scopt" %% "scopt" % "3.7.1",
     "com.github.spullara.mustache.java" % "compiler" % "0.8.18",
     "org.codehaus.plexus" % "plexus-utils" % "1.5.4",
     "com.google.code.findbugs" % "jsr305" % "2.0.1",
     "commons-cli" % "commons-cli" % "1.3.1"
   ).++(CrossVersion.partialVersion(scalaVersion.value) match {
     case Some((2, x)) if x >= 11 =>
-      Seq("org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.4")
+      Seq("org.scala-lang.modules" %% "scala-parser-combinators" % "1.1.2")
     case _ => Nil
   }),
   test in assembly := {},  // Skip tests when running assembly.
